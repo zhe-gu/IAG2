@@ -99,6 +99,10 @@ int main(void)
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
 
+	HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim3);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -164,6 +168,22 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+	if (htim == &htim2)
+	{
+		// if(__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET)
+		{
+			// __HAL_TIM_CLEAR_FLAG(&htim2, TIM_FLAG_UPDATE);
+			HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin); //翻转电平，LED翻转
+		}
+	}
+	else 	if (htim == &htim3)
+	{
+			HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin); //翻转电平，LED翻转
+	}
+}
 
 /* USER CODE END 4 */
 
