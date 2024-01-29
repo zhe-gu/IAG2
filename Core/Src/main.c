@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "tim.h"
 #include "usb_device.h"
 #include "gpio.h"
@@ -46,7 +47,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t cache_data_index;
+uint32_t cache_adc_data[CACHE_DATA_SIZE];
+uint16_t cache_tim_data[CACHE_DATA_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,6 +91,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USB_DEVICE_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
@@ -99,6 +103,8 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim1);
   // HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
+
+  HAL_ADC_Start(&hadc2); // 进行Dual转换时，从机需要启动一次
 
   /* USER CODE END 2 */
 
@@ -165,23 +171,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-  /**
-	if (htim == &htim2)
-	{
-		// if(__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET)
-		{
-			// __HAL_TIM_CLEAR_FLAG(&htim2, TIM_FLAG_UPDATE);
-			HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin); //翻转电平，LED翻转
-		}
-	}
-	else **/if (htim == &htim3)
-	{
-			HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin); //翻转电平，LED翻转
-	}
-}
 
 /* USER CODE END 4 */
 

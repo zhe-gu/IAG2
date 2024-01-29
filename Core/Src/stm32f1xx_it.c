@@ -56,6 +56,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
+extern DMA_HandleTypeDef hdma_adc1;
 extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
 extern TIM_HandleTypeDef htim1;
@@ -205,6 +206,20 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles DMA1 channel1 global interrupt.
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
   * @brief This function handles ADC1 and ADC2 global interrupts.
   */
 void ADC1_2_IRQHandler(void)
@@ -290,5 +305,40 @@ void TIM4_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+	if (htim == &htim1)
+	{
+    // HAL_ADC_Start(&hadc2); // 只需要进行一次，所以在main函数中进行
+    HAL_ADCEx_MultiModeStart_DMA(&hadc1, &cache_adc_data[cache_data_index], 1);
+    /**
+    if(__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET)
+    {
+      __HAL_TIM_CLEAR_FLAG(&htim2, TIM_FLAG_UPDATE);
+      HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin); //翻转电平，LED翻转
+    }
+    **/
+  }
+	else if (htim == &htim3)
+	{
+			HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin); //翻转电平，LED翻转
+	}
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+    /**
+    uint32_t ADC1_val=adcValue & 0x0000FFFF;
+    Volt1=3300*ADC1_val;
+    Volt1=Volt1>>12;
+
+    uint32_t ADC2_val=adcValue & 0xFFFF0000;
+    ADC2_val= ADC2_val>>16;
+    Volt2=3300*ADC2_val;
+    Volt2=Volt2>>12;
+    **/
+    cache_data_index++;
+}
 
 /* USER CODE END 1 */

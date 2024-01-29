@@ -33,19 +33,22 @@
                     "path": "../Core/Src/adc.c"
                   },
                   {
+                    "path": "../Core/Src/dma.c"
+                  },
+                  {
                     "path": "../Core/Src/gpio.c"
                   },
                   {
                     "path": "../Core/Src/main.c"
                   },
                   {
-                    "path": "../Core/Src/spi.c"
-                  },
-                  {
                     "path": "../Core/Src/stm32f1xx_hal_msp.c"
                   },
                   {
                     "path": "../Core/Src/stm32f1xx_it.c"
+                  },
+                  {
+                    "path": "../Core/Src/system_stm32f1xx.c"
                   },
                   {
                     "path": "../Core/Src/tim.c"

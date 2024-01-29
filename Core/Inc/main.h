@@ -47,6 +47,11 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
+#define CACHE_DATA_SIZE 256
+extern uint8_t cache_data_index;
+extern uint32_t cache_adc_data[];
+extern uint16_t cache_tim_data[];
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
