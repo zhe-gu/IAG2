@@ -61,7 +61,6 @@ extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim3;
-extern TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -290,27 +289,13 @@ void TIM3_IRQHandler(void)
   /* USER CODE END TIM3_IRQn 1 */
 }
 
-/**
-  * @brief This function handles TIM4 global interrupt.
-  */
-void TIM4_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM4_IRQn 0 */
-
-  /* USER CODE END TIM4_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim4);
-  /* USER CODE BEGIN TIM4_IRQn 1 */
-
-  /* USER CODE END TIM4_IRQn 1 */
-}
-
 /* USER CODE BEGIN 1 */
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
 	if (htim == &htim1)
 	{
-    // HAL_ADC_Start(&hadc2); // 只需要进行一次，所以在main函数中进行
+    // HAL_ADC_Start(&hadc2); // 只需要进行一次，�?以在main函数中运�?
     HAL_ADCEx_MultiModeStart_DMA(&hadc1, &cache_adc_data[cache_data_index], 1);
     /**
     if(__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET)
@@ -322,8 +307,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
   }
 	else if (htim == &htim3)
 	{
-			HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin); //翻转电平，LED翻转
+    HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin); //翻转电平，LED翻转
 	}
+  /**
+  else if (htim == &htim4)
+  {
+
+  }
+  **/
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)

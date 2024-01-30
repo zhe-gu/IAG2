@@ -50,6 +50,7 @@
 uint8_t cache_data_index;
 uint32_t cache_adc_data[CACHE_DATA_SIZE];
 uint16_t cache_tim_data[CACHE_DATA_SIZE];
+// uint16_t cache_tim_cycle_data[CACHE_DATA_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,8 +104,9 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim1);
   // HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Encoder_Start_IT(&htim4, TIM_CHANNEL_ALL);
 
-  HAL_ADC_Start(&hadc2); // 进行Dual转换时，从机需要启动一次
+  HAL_ADC_Start(&hadc2); // 进行Dual转换时，从机只需要启动一�?
 
   /* USER CODE END 2 */
 

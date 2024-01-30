@@ -51,6 +51,7 @@ extern "C" {
 extern uint8_t cache_data_index;
 extern uint32_t cache_adc_data[];
 extern uint16_t cache_tim_data[];
+// extern uint16_t cache_tim_cycle_data[];
 
 /* USER CODE END EM */
 

@@ -444,7 +444,8 @@
   <Cable Type="7" JLinkUsbNum="0" JLinkUsbFreq="12000000"/>
   <Watch/>
   <Waveform>
-    <Signal Component="0" PortName="PB0" PortIndex="-1" ValuePart="in"/>
     <Signal Component="0" PortName="PB0" PortIndex="-1" ValuePart="out"/>
+    <Signal Component="0" PortName="PB6" PortIndex="-1" ValuePart="in"/>
+    <Signal Component="0" PortName="PB7" PortIndex="-1" ValuePart="in"/>
   </Waveform>
 </CorsicaProbe>
